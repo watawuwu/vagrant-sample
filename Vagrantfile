@@ -161,7 +161,9 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
       :mysql => {
         :server_root_password => 'rootpass',
         :server_debian_password => 'debpass',
-        :server_repl_password => 'replpass'
+        :server_repl_password => 'replpass',
+        # for remote access.
+        :bind_address => '0.0.0.0'
       },
       :dotfiles => {
         :repository => 'https://github.com/watawu/config.git',
@@ -171,6 +173,7 @@ Vagrant.configure(VAGRANTFILE_API_VERSION) do |config|
 
     chef.run_list = [
       "recipe[apt::default]",
+      "recipe[base::default]",
       "recipe[dotfiles::default]",
       "recipe[mariadb::mariadb_repo]",
       "recipe[mariadb::server]"
